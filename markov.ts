@@ -100,7 +100,7 @@ const tree = makeMarkovTree(headlines, maxSampleLength);
 
 // printTree(tree);
 
-let count = 100;
+let count = 40;
 while (count --) {
 
 	let generated: MarkovIndex[] = [start];
