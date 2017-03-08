@@ -1,12 +1,27 @@
 import * as fs from 'fs';
 
+const number = Symbol('number');
+
+const numbers: Array<string> = [];
 const headlines = fs
 	.readFileSync('headlines.txt')
 	.toString()
 	.split("\n")
-	.map(headline => headline.split(' '));
+	.map(headline => headline
+		.split(' ')
+		.map(word => {
 
+			if (/^\d+$/.test(word)) {
+
+				numbers.push(word);
+				return number;
+			}
+
+			return word;
+		})
+	);
 // headlines = headlines.slice(0, 100);
+
 
 type MarkovIndex = string | symbol;
 
@@ -121,7 +136,13 @@ while (count --) {
 		generated.push(word);
 	}
 
-	console.log(generated.map(x => x.toString()).join(' '));
+	console.log(generated
+		.map(x => x != number
+			? x.toString()
+			: numbers[Math.ceil(numbers.length * Math.random())]
+		)
+		.join(' ')
+	);
 }
 
 
